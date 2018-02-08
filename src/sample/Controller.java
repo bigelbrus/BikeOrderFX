@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -14,6 +15,8 @@ public class Controller implements Initializable {
     @FXML public ComboBox<String> model;
     @FXML public TextField quantity;
     @FXML public Label status;
+
+    SimpleStringProperty statusProperty = new SimpleStringProperty("Fill the form");
 //    @FXML public ComboBox<String> cargoType;
 
     public void submit(ActionEvent evt){
@@ -25,30 +28,30 @@ public class Controller implements Initializable {
         try {
             validateOrder(selectedBike,quantityBike);
         } catch (TooManyBikesException e) {
-            status.setText(e.getMessage());
+            statusProperty.set(e.getMessage());
             System.out.println(e.getMessage());
         }
     }
 
     public void validateOrder(String selectedBike, int quantity) throws TooManyBikesException{
         if (quantity<=0){
-            status.setText("Must be above zero");
+            statusProperty.set("Must be above zero");
         }else {
             switch (selectedBike){
                 case "Kuban":
                     if (quantity>5) throw new TooManyBikesException();
-                    else status.setText("Kuban OK!");
+                    else statusProperty.set("Order is accepted. Kuban. Quantity: "+quantity+"pcs.");
                     break;
                 case "Sartr":
                     if (quantity>8) throw new TooManyBikesException();
-                    else status.setText("Sartr OK!");
+                    else statusProperty.set("Order is accepted. Sartr. Quantity: "+quantity+"pcs.");
                     break;
                 case "Ural":
                     if (quantity>3) throw new TooManyBikesException();
-                    else status.setText("Ural OK");
+                    else statusProperty.set("Order is accepted. Ural. Quantity: "+quantity+"pcs.");
                     break;
                 case "Not selected":
-                    status.setText("Choose model");
+                    statusProperty.set("You must to choose the model");
                     break;
             }
         }
@@ -57,6 +60,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model.getItems().setAll("Kuban","Sartr","Ural");
+        status.textProperty().bind(statusProperty);
 
     }
 }
