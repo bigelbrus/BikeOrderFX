@@ -1,0 +1,20 @@
+.label{
+    -fx-text-fill: blue;
+    -fx-font: normal bold 20px 'serif';
+}
+.header{
+	-fx-text-fill: red;
+    -fx-font: normal bold 40px 'serif';
+}
+.button{
+    -fx-font: normal bold 40px 'serif';
+    -fx-background-color: darkslateblue;
+    -fx-text-fill: white;
+}
+.status{
+	-fx-text-fill: green;
+    -fx-font: normal bold 20px 'serif';
+}
+.root{
+    -fx-background-color: #0093ff;
+}
